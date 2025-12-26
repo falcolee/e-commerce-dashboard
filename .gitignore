@@ -1,0 +1,14 @@
+*.env
+storage/
+volumes/
+.idea/
+.vscode/
+build
+node_modules
+dist
+tmp
+*.log
+*.tsbuildinfo
+openspec
+# Ignore CCCC runtime domain (Ephemeral mode)
+/.cccc/**

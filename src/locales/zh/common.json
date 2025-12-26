@@ -1,0 +1,75 @@
+{
+  "common": {
+    "save": "保存",
+    "cancel": "取消",
+    "delete": "删除",
+    "edit": "编辑",
+    "create": "创建",
+    "search": "搜索",
+    "filter": "筛选",
+    "clear": "清除",
+    "loading": "加载中...",
+    "success": "成功",
+    "error": "错误",
+    "confirm": "确认",
+    "yes": "是",
+    "no": "否"
+  },
+  "nav": {
+    "dashboard": "仪表板",
+    "products": "商品",
+    "orders": "订单",
+    "customers": "客户",
+    "categories": "分类",
+    "tags": "标签",
+    "attributes": "属性",
+    "media": "媒体",
+    "pages": "页面",
+    "posts": "文章",
+    "roles": "角色",
+    "settings": "设置",
+    "logout": "退出"
+  },
+  "products": {
+    "title": "商品管理",
+    "addProduct": "添加商品",
+    "editProduct": "编辑商品",
+    "deleteProduct": "删除商品",
+    "productName": "商品名称",
+    "sku": "SKU",
+    "price": "价格",
+    "stock": "库存",
+    "status": "状态",
+    "type": "类型",
+    "simple": "简单商品",
+    "variable": "可变商品",
+    "manageVariants": "管理变体",
+    "manageStock": "管理库存",
+    "manageMeta": "管理元数据"
+  },
+  "orders": {
+    "title": "订单管理",
+    "orderNumber": "订单号",
+    "customer": "客户",
+    "total": "总计",
+    "status": "状态",
+    "date": "日期",
+    "viewDetails": "查看详情"
+  },
+  "customers": {
+    "title": "客户管理",
+    "addCustomer": "添加客户",
+    "editCustomer": "编辑客户",
+    "customerName": "客户姓名",
+    "email": "邮箱",
+    "phone": "电话",
+    "addresses": "地址"
+  },
+  "auth": {
+    "login": "登录",
+    "logout": "退出",
+    "username": "用户名",
+    "password": "密码",
+    "rememberMe": "记住我"
+  }
+}
