@@ -1,11 +1,12 @@
 import { useState, useEffect } from 'react';
-import { Table, Button, Space, Tag, Input, Select, Dropdown, message, Modal, Badge } from 'antd';
+import { Table, Button, Space, Tag, Input, Select, Dropdown, Modal, Badge } from 'antd';
 import type { MenuProps } from 'antd';
 import { EyeOutlined, SearchOutlined, MoreOutlined, CarOutlined } from '@ant-design/icons';
 import type { Order, OrderShipment } from '@/lib/types';
 import api from '@/lib/api';
 import ShipmentList from '@/components/shipment/ShipmentList';
 import ShipmentForm, { type ShipmentFormValues } from '@/components/shipment/ShipmentForm';
+import { message } from '@/lib/antdApp';
 
 const Orders = () => {
   const [searchText, setSearchText] = useState('');
@@ -238,7 +239,7 @@ const Orders = () => {
           </Button>,
         ]}
         width={1000}
-        destroyOnClose
+        destroyOnHidden
       >
         {orderShipments.length > 0 ? (
           <ShipmentList
@@ -276,7 +277,7 @@ const Orders = () => {
         }}
         footer={null}
         width={600}
-        destroyOnClose
+        destroyOnHidden
       >
         {selectedOrder && (
           <ShipmentForm

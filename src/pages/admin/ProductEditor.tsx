@@ -1,9 +1,10 @@
 import { useState, useEffect, useCallback } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { Layout, Form, Button, Space, message, Spin, Modal } from 'antd';
+import { Layout, Form, Button, Space, Spin, Modal } from 'antd';
 import { SaveOutlined, ArrowLeftOutlined } from '@ant-design/icons';
 import api from '@/lib/api';
 import type { Product, Category, Tag } from '@/lib/types';
+import { message } from '@/lib/antdApp';
 
 // Left Column Components
 import ProductTitleSection from '@/components/product-editor/ProductTitleSection';

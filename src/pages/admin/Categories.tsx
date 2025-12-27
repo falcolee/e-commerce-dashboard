@@ -1,10 +1,12 @@
 import { useState, useEffect } from 'react';
-import { Table, Button, Input, Modal, Form, message, Dropdown, TreeSelect, Upload, Image, InputNumber } from 'antd';
+import { Table, Button, Input, Modal, Form, Dropdown, TreeSelect, Upload, Image, InputNumber } from 'antd';
 import type { MenuProps, TreeSelectProps } from 'antd';
 import { PlusOutlined, EditOutlined, DeleteOutlined, SearchOutlined, MoreOutlined } from '@ant-design/icons';
 import type { UploadChangeParam, UploadFile } from 'antd/es/upload/interface';
 import api from '@/lib/api';
 import type { Category } from '@/lib/types';
+import { sanitizeCategoryTree } from '@/utils/taxonomy/sanitizeTaxonomy';
+import { message } from '@/lib/antdApp';
 
 type CategoryTreeNode = Required<TreeSelectProps['treeData']>[number];
 
@@ -23,7 +25,7 @@ const Categories = () => {
     setLoading(true);
     try {
       const tree = await api.taxonomies.categories.tree({ filter: { taxonomy } });
-      setCategories(tree || []);
+      setCategories(sanitizeCategoryTree(tree));
     } catch (error: unknown) {
       const apiError = (error as { response?: { data?: { message?: string } } })?.response?.data?.message;
       message.error(apiError || 'Failed to load categories');

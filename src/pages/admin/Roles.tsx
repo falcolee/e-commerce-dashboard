@@ -1,9 +1,10 @@
 import { useState, useEffect } from 'react';
-import { Table, Button, Tag, Card, List, Modal, Form, Input, Select, message, Dropdown } from 'antd';
+import { Table, Button, Tag, Card, List, Modal, Form, Input, Select, Dropdown } from 'antd';
 import type { MenuProps } from 'antd';
 import { PlusOutlined, EditOutlined, DeleteOutlined, MoreOutlined } from '@ant-design/icons';
 import api from '@/lib/api';
 import type { Role, Permission } from '@/lib/types';
+import { message } from '@/lib/antdApp';
 
 interface RoleFormValues {
   name: string;

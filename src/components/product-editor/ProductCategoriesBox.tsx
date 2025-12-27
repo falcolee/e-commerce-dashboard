@@ -1,10 +1,12 @@
 import { useEffect, useMemo, useState } from 'react';
-import { Card, Form, TreeSelect, Button, message } from 'antd';
+import { Card, Form, TreeSelect, Button } from 'antd';
 import type { TreeSelectProps } from 'antd';
 import { PlusOutlined, ReloadOutlined } from '@ant-design/icons';
 import { useNavigate } from 'react-router-dom';
 import api from '@/lib/api';
 import type { Category } from '@/lib/types';
+import { sanitizeCategoryTree } from '@/utils/taxonomy/sanitizeTaxonomy';
+import { message } from '@/lib/antdApp';
 
 type TreeNode = Required<TreeSelectProps['treeData']>[number];
 
@@ -13,7 +15,8 @@ const mapToTreeData = (nodes: Category[]): TreeNode[] =>
     title: node.name,
     value: node.term_id,
     key: `${node.term_id}`,
-    children: node.children && node.children.length ? mapToTreeData(node.children) : undefined,
+    children:
+      node.children && node.children.length ? mapToTreeData(node.children) : undefined,
   }));
 
 const ProductCategoriesBox = () => {
@@ -25,7 +28,7 @@ const ProductCategoriesBox = () => {
     setLoading(true);
     try {
       const res = await api.taxonomies.categories.tree({});
-      setCategories(res || []);
+      setCategories(sanitizeCategoryTree(res));
     } catch (err) {
       const errorMsg =
         (err as { response?: { data?: { message?: string } } })?.response?.data?.message ||

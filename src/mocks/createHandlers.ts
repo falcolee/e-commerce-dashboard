@@ -30,6 +30,29 @@ export function createHandlers(options: CreateHandlersOptions) {
   });
 
   const handlers: Array<ReturnType<(typeof http)["get"]>> = [];
+  const urlsFor = (mswPath: string): string[] => {
+    const normalizedPath = mswPath.startsWith("/") ? mswPath : `/${mswPath}`;
+
+    // 1) Match against the API base URL (supports cross-origin requests, e.g. localhost:3000)
+    // 2) Match against the API base pathname only (supports relative/base-path setups)
+    const candidates = new Set<string>();
+
+    if (/^https?:\/\//i.test(options.apiBaseUrl)) {
+      candidates.add(joinUrl(options.apiBaseUrl, normalizedPath));
+      try {
+        const apiUrl = new URL(options.apiBaseUrl);
+        const basePath = apiUrl.pathname.replace(/\/+$/, "");
+        candidates.add(`${basePath}${normalizedPath}`);
+      } catch {
+        // ignore
+      }
+    } else {
+      const basePath = options.apiBaseUrl.replace(/\/+$/, "");
+      candidates.add(`${basePath}${normalizedPath}`);
+    }
+
+    return Array.from(candidates);
+  };
 
   for (const [swaggerPath, methods] of Object.entries(options.spec.paths)) {
     if (!swaggerPath.startsWith("/admin/")) continue;
@@ -37,9 +60,7 @@ export function createHandlers(options: CreateHandlersOptions) {
     const clientPath = swaggerPath.replace(/^\/admin/, "");
     const clientPathTemplate = clientPath.replace(/{([^}]+)}/g, ":$1");
     const mswPath = clientPathTemplate;
-    // Use relative path to allow MSW to intercept requests regardless of origin
-    // The apiBaseUrl already includes '/api/v1/admin', so we prepend that
-    const url = `/api/v1/admin${mswPath.startsWith("/") ? mswPath : `/${mswPath}`}`;
+    const handlerUrls = urlsFor(mswPath);
 
     for (const [method, operation] of Object.entries(methods)) {
       if (!operation) continue;
@@ -55,22 +76,24 @@ export function createHandlers(options: CreateHandlersOptions) {
         operation,
       });
 
-      switch (lower) {
-        case "get":
-          handlers.push(http.get(url, resolver));
-          break;
-        case "post":
-          handlers.push(http.post(url, resolver));
-          break;
-        case "put":
-          handlers.push(http.put(url, resolver));
-          break;
-        case "patch":
-          handlers.push(http.patch(url, resolver));
-          break;
-        case "delete":
-          handlers.push(http.delete(url, resolver));
-          break;
+      for (const url of handlerUrls) {
+        switch (lower) {
+          case "get":
+            handlers.push(http.get(url, resolver));
+            break;
+          case "post":
+            handlers.push(http.post(url, resolver));
+            break;
+          case "put":
+            handlers.push(http.put(url, resolver));
+            break;
+          case "patch":
+            handlers.push(http.patch(url, resolver));
+            break;
+          case "delete":
+            handlers.push(http.delete(url, resolver));
+            break;
+        }
       }
     }
   }

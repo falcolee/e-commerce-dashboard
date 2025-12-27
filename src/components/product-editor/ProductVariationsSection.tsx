@@ -17,11 +17,11 @@ import {
   Switch,
   Table,
   Tag,
-  message,
 } from 'antd';
 import { PlusOutlined, EditOutlined, DeleteOutlined, ReloadOutlined } from '@ant-design/icons';
 import api from '@/lib/api';
 import type { Product, ProductAttribute } from '@/lib/types';
+import { message } from '@/lib/antdApp';
 
 interface Props {
   productId?: number;
@@ -348,7 +348,7 @@ const ProductVariationsSection = ({ productId, onVariationsChange }: Props) => {
         open={drawerVisible}
         onClose={() => setDrawerVisible(false)}
         width={640}
-        destroyOnClose
+        destroyOnHidden
         footer={
           <div className="flex justify-end gap-2">
             <Button onClick={() => setDrawerVisible(false)}>Cancel</Button>

@@ -1,10 +1,11 @@
 import { useState, useEffect, useCallback } from 'react';
-import { Table, Button, Space, Tag, Input, Modal, Form, Select, message, Dropdown } from 'antd';
+import { Table, Button, Space, Tag, Input, Modal, Form, Select, Dropdown } from 'antd';
 import type { MenuProps } from 'antd';
 import { PlusOutlined, EditOutlined, DeleteOutlined, SearchOutlined, MoreOutlined } from '@ant-design/icons';
 import api from '@/lib/api';
 import type { Post } from '@/lib/types';
 import WysiwygEditor from '@/components/common/WysiwygEditor';
+import { message } from '@/lib/antdApp';
 
 const Posts = () => {
   const [searchText, setSearchText] = useState('');

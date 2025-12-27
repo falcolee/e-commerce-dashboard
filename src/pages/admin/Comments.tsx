@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
-import { Table, Button, Space, Tag, Input, Modal, Form, Select, message, Dropdown } from 'antd';
+import { Table, Button, Space, Tag, Input, Modal, Form, Select, Dropdown } from 'antd';
 import {
   SearchOutlined,
   CheckOutlined,
@@ -12,6 +12,7 @@ import type { MenuProps } from 'antd';
 import type { FilterDropdownProps } from 'antd/es/table/interface';
 import api from '@/lib/api';
 import type { Comment } from '@/lib/types';
+import { message } from '@/lib/antdApp';
 
 const Comments = () => {
   const [searchText, setSearchText] = useState('');

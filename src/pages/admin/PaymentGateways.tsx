@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react';
-import { Card, Row, Col, Button, Modal, message, Spin } from 'antd';
+import { Card, Row, Col, Button, Modal, Spin } from 'antd';
 import { PlusOutlined, ReloadOutlined } from '@ant-design/icons';
 import api from '@/lib/api';
 import type { PaymentGateway } from '@/lib/types';
@@ -7,6 +7,7 @@ import GatewayCard from '@/components/payment/GatewayCard';
 import GatewayConfigForm, { GatewayConfigValues } from '@/components/payment/GatewayConfigForm';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { getErrorMessage } from '@/lib/error';
+import { message } from '@/lib/antdApp';
 
 const PaymentGateways = () => {
   const queryClient = useQueryClient();
@@ -165,7 +166,7 @@ const PaymentGateways = () => {
         }}
         footer={null}
         width={600}
-        destroyOnClose
+        destroyOnHidden
       >
         {selectedGateway && (
           <GatewayConfigForm

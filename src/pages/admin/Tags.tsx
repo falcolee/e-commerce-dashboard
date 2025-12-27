@@ -1,9 +1,11 @@
 import { useState, useEffect } from 'react';
-import { Table, Button, Input, Modal, Form, message, Dropdown } from 'antd';
+import { Table, Button, Input, Modal, Form, Dropdown } from 'antd';
 import type { MenuProps } from 'antd';
 import { PlusOutlined, EditOutlined, DeleteOutlined, SearchOutlined, MoreOutlined } from '@ant-design/icons';
 import api from '@/lib/api';
 import type { Tag } from '@/lib/types';
+import { message } from '@/lib/antdApp';
+import { sanitizeTags } from '@/utils/taxonomy/sanitizeTaxonomy';
 
 const Tags = () => {
   const [searchText, setSearchText] = useState('');
@@ -26,7 +28,7 @@ const Tags = () => {
         page,
         page_size: pageSize,
       });
-      setTags(res.items ?? []);
+      setTags(sanitizeTags(res.items));
       setPagination({
         current: res.pagination?.page || 1,
         pageSize: res.pagination?.page_size || 30,

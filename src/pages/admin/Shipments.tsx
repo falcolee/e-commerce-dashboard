@@ -1,5 +1,5 @@
 import { useCallback, useState, useEffect } from 'react';
-import { Card, Button, Modal, message, Space, Select, DatePicker, Input } from 'antd';
+import { Card, Button, Modal, Space, Select, DatePicker, Input } from 'antd';
 import { PlusOutlined, ReloadOutlined, SearchOutlined } from '@ant-design/icons';
 import api from '@/lib/api';
 import type { OrderShipment } from '@/lib/types';
@@ -7,6 +7,7 @@ import ShipmentList from '@/components/shipment/ShipmentList';
 import ShipmentForm, { ShipmentFormValues } from '@/components/shipment/ShipmentForm';
 import TrackingTimeline from '@/components/shipment/TrackingTimeline';
 import dayjs, { Dayjs } from 'dayjs';
+import { message } from '@/lib/antdApp';
 
 const { RangePicker } = DatePicker;
 
@@ -228,7 +229,7 @@ const Shipments = () => {
         onCancel={() => setCreateModalVisible(false)}
         footer={null}
         width={600}
-        destroyOnClose
+        destroyOnHidden
       >
         <ShipmentForm
           onSave={handleCreateSave}
@@ -246,7 +247,7 @@ const Shipments = () => {
         }}
         footer={null}
         width={600}
-        destroyOnClose
+        destroyOnHidden
       >
         {selectedShipment && (
           <ShipmentForm
@@ -270,7 +271,7 @@ const Shipments = () => {
         }}
         footer={null}
         width={700}
-        destroyOnClose
+        destroyOnHidden
       >
         {selectedShipment && (
           <TrackingTimeline shipment={selectedShipment} />

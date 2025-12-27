@@ -1,8 +1,9 @@
 import { useState, useCallback, useMemo } from 'react';
-import { Form, Input, Button, Space, Switch, message } from 'antd';
+import { Form, Input, Button, Space, Switch } from 'antd';
 import { EyeOutlined, EyeInvisibleOutlined, SaveOutlined } from '@ant-design/icons';
 import type { PaymentGateway } from '@/lib/types';
 import { getErrorMessage } from '@/lib/error';
+import { message } from '@/lib/antdApp';
 
 interface GatewayConfigFormProps {
   gateway: PaymentGateway;
@@ -133,17 +134,17 @@ const GatewayConfigForm = ({ gateway, onSave, onCancel }: GatewayConfigFormProps
         <Input placeholder="Enter public key (optional)" />
       </Form.Item>
 
-      <Form.Item
-        label="Webhook URL"
-        name="webhook_url"
-        rules={[
-          { type: 'url', message: 'Please enter a valid URL' },
-        ]}
-      >
-        <Input
-          placeholder="https://your-domain.com/webhooks/payment"
-          addonBefore="POST"
-        />
+      <Form.Item label="Webhook URL">
+        <Space.Compact block>
+          <Input readOnly value="POST" style={{ width: 88, textAlign: 'center' }} />
+          <Form.Item
+            name="webhook_url"
+            noStyle
+            rules={[{ type: 'url', message: 'Please enter a valid URL' }]}
+          >
+            <Input placeholder="https://your-domain.com/webhooks/payment" />
+          </Form.Item>
+        </Space.Compact>
       </Form.Item>
 
       <Form.Item

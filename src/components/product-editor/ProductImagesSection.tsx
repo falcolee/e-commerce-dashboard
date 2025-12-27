@@ -1,8 +1,9 @@
-import { Card, Upload, Image, Space, Button, message } from 'antd';
+import { Card, Upload, Image, Space, Button } from 'antd';
 import { PlusOutlined, DeleteOutlined, LoadingOutlined } from '@ant-design/icons';
 import { useEffect, useRef, useState } from 'react';
 import type { UploadChangeParam, UploadFile } from 'antd/es/upload/interface';
 import api from '@/lib/api';
+import { message } from '@/lib/antdApp';
 
 interface ProductImagesSectionProps {
   initialValues?: {
@@ -24,26 +25,48 @@ const ProductImagesSection: React.FC<ProductImagesSectionProps> = ({
 
   // Initialize with existing product data
   useEffect(() => {
-    if (initialValues?.featured_image) {
-      setFeaturedPreview(initialValues.featured_image);
-      setFeaturedImage({
-        uid: '-1',
-        name: 'featured-image',
-        status: 'done',
-        url: initialValues.featured_image,
-      });
+    // Avoid infinite loops if parent recreates `initialValues` on every render.
+    // Only seed local state once we actually have initial values (e.g. after product load).
+    if (!initialValues) return;
+
+    const featuredUrl = initialValues.featured_image?.trim();
+    const galleryUrls = Array.isArray(initialValues.gallery_images)
+      ? initialValues.gallery_images.filter((url): url is string => typeof url === 'string' && url.trim().length > 0)
+      : [];
+
+    if (featuredUrl) {
+      setFeaturedImage((prev) =>
+        prev?.url === featuredUrl
+          ? prev
+          : {
+              uid: '-1',
+              name: 'featured-image',
+              status: 'done',
+              url: featuredUrl,
+            },
+      );
     }
 
-    if (initialValues?.gallery_images && initialValues.gallery_images.length > 0) {
-      const initialGalleryImages: UploadFile[] = initialValues.gallery_images.map((url, index) => ({
-        uid: `-${index + 2}`,
-        name: `gallery-image-${index}`,
-        status: 'done',
-        url,
-      }));
-      setGalleryImages(initialGalleryImages);
+    if (galleryUrls.length > 0) {
+      setGalleryImages((prev) => {
+        const prevUrls = prev.map((img) => img.url).filter(Boolean).join('|');
+        const nextUrls = galleryUrls.join('|');
+        if (prevUrls === nextUrls) return prev;
+
+        return galleryUrls.map((url, index) => ({
+          uid: `-${index + 2}`,
+          name: `gallery-image-${index}`,
+          status: 'done',
+          url,
+        }));
+      });
     }
-  }, [initialValues]);
+  }, [
+    initialValues?.featured_image,
+    Array.isArray(initialValues?.gallery_images)
+      ? initialValues?.gallery_images.join('|')
+      : '',
+  ]);
 
   useEffect(() => {
     if (featuredObjectUrlRef.current) {

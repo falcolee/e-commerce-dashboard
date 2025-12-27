@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
-import { Form, Input, Select, Button, Space, InputNumber, Switch, Divider, message } from 'antd';
+import { Form, Input, Select, Button, Space, InputNumber, Switch, Divider } from 'antd';
 import type { ShippingMethod } from '@/lib/types';
+import { message } from '@/lib/antdApp';
 
 const { TextArea } = Input;
 

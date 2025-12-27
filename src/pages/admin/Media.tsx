@@ -1,9 +1,10 @@
 import { useState, useEffect } from 'react';
-import { Card, Row, Col, Image, Button, Upload, message, Modal } from 'antd';
+import { Card, Row, Col, Image, Button, Upload, Modal } from 'antd';
 import type { UploadRequestOption } from 'rc-upload/lib/interface';
 import { UploadOutlined, DeleteOutlined } from '@ant-design/icons';
 import api from '@/lib/api';
 import type { Media } from '@/lib/types';
+import { message } from '@/lib/antdApp';
 
 const MediaPage = () => {
   const [media, setMedia] = useState<Media[]>([]);

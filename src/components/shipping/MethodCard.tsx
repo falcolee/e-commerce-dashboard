@@ -37,7 +37,7 @@ const MethodCard = ({ method, onToggle, onEdit, onDelete }: MethodCardProps) => 
         height: '100%',
         borderColor: method.enabled ? '#52c41a' : '#d9d9d9',
       }}
-      bodyStyle={{ padding: 16 }}
+      styles={{ body: { padding: 16 } }}
     >
       <div style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
         {/* Header with Icon */}

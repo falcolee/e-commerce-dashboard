@@ -1,9 +1,10 @@
 import { useState, useEffect, useCallback } from 'react';
-import { Table, Button, Space, Input, Tag, Modal, Form, Select, message, Drawer, Card, Tabs, Dropdown } from 'antd';
+import { Table, Button, Space, Input, Tag, Modal, Form, Select, Drawer, Card, Tabs, Dropdown } from 'antd';
 import type { MenuProps } from 'antd';
 import { PlusOutlined, EditOutlined, SearchOutlined, DeleteOutlined, HomeOutlined, TagsOutlined, MoreOutlined, MinusCircleOutlined } from '@ant-design/icons';
 import api from '@/lib/api';
 import type { User, UserMeta, Role, UserRole } from '@/lib/types';
+import { message } from '@/lib/antdApp';
 
 interface CustomerFormValues {
   username: string;

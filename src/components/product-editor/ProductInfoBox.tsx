@@ -1,7 +1,8 @@
-import { Card, Descriptions, Button, message } from 'antd';
+import { Card, Descriptions, Button } from 'antd';
 import { CopyOutlined } from '@ant-design/icons';
 import type { Product } from '@/lib/types';
 import dayjs from 'dayjs';
+import { message } from '@/lib/antdApp';
 
 interface Props {
   product: Product | null;

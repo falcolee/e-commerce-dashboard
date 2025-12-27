@@ -1,9 +1,10 @@
 import { useState, useEffect } from 'react';
-import { Table, Button, Input, Card, Tabs, Tag, Space, message } from 'antd';
+import { Table, Button, Input, Card, Tabs, Tag, Space } from 'antd';
 import { SearchOutlined, TableOutlined, AppstoreOutlined } from '@ant-design/icons';
 import api from '@/lib/api';
 import type { Permission, Role } from '@/lib/types';
 import PermissionMatrix from '@/components/permissions/PermissionMatrix';
+import { message } from '@/lib/antdApp';
 
 const { TabPane } = Tabs;
 

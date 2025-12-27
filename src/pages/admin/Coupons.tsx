@@ -1,11 +1,12 @@
 import React, { useMemo, useState } from "react";
-import { Card, Table, Button, Space, Tag, Input, Modal, Form, DatePicker, InputNumber, Select, message, Popconfirm } from "antd";
+import { Card, Table, Button, Space, Tag, Input, Modal, Form, DatePicker, InputNumber, Select, Popconfirm } from "antd";
 import type { ColumnsType } from "antd/es/table";
 import { PlusOutlined, EditOutlined, DeleteOutlined, SearchOutlined } from "@ant-design/icons";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import api from "@/lib/api";
 import type { Coupon, CreateCouponRequest, UpdateCouponRequest } from "@/lib/types";
 import { getErrorMessage } from "@/lib/error";
+import { message } from "@/lib/antdApp";
 
 const { RangePicker } = DatePicker;
 const { Option } = Select;

@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
-import { Form, Input, Select, Button, Space, InputNumber, message } from 'antd';
+import { Form, Input, Select, Button, Space, InputNumber } from 'antd';
 import type { Order, OrderShipment } from '@/lib/types';
 import api from '@/lib/api';
+import { message } from '@/lib/antdApp';
 
 const { TextArea } = Input;
 

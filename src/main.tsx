@@ -2,6 +2,8 @@ import { createRoot } from "react-dom/client";
 import App from "./App.tsx";
 import "./index.css";
 import { AppThemeProvider } from "./providers/AppThemeProvider";
+import { AntdAppProvider } from "./providers/AntdAppProvider";
+import "./i18n";
 
 async function bootstrap() {
   const { enableMocking } = await import("./mocks");
@@ -9,7 +11,9 @@ async function bootstrap() {
 
   createRoot(document.getElementById("root")!).render(
     <AppThemeProvider>
-      <App />
+      <AntdAppProvider>
+        <App />
+      </AntdAppProvider>
     </AppThemeProvider>
   );
 }

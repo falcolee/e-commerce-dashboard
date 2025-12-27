@@ -1,10 +1,20 @@
 import { useState, useEffect } from 'react';
-import { Card, Row, Col, Button, Modal, message, Spin } from 'antd';
+import { Card, Row, Col, Button, Modal, Spin } from 'antd';
 import { PlusOutlined, ReloadOutlined } from '@ant-design/icons';
 import api from '@/lib/api';
 import type { ShippingMethod } from '@/lib/types';
 import MethodCard from '@/components/shipping/MethodCard';
 import MethodForm, { ShippingMethodFormValues } from '@/components/shipping/MethodForm';
+import { message } from '@/lib/antdApp';
+
+function isShippingMethodLike(value: unknown): value is ShippingMethod {
+  return (
+    typeof value === 'object' &&
+    value !== null &&
+    typeof (value as any).id === 'number' &&
+    typeof (value as any).name === 'string'
+  );
+}
 
 const ShippingMethods = () => {
   const [methods, setMethods] = useState<ShippingMethod[]>([]);
@@ -20,7 +30,12 @@ const ShippingMethods = () => {
     setLoading(true);
     try {
       const res = await api.shippingMethods.list();
-      setMethods(res || []);
+      const rawItems = Array.isArray(res)
+        ? res
+        : Array.isArray((res as any)?.items)
+          ? (res as any).items
+          : [];
+      setMethods(rawItems.filter(isShippingMethodLike));
     } catch (error: unknown) {
       const errorMessage = error instanceof Error ? error.message : 'Failed to load shipping methods';
       message.error(errorMessage);
@@ -189,7 +204,7 @@ const ShippingMethods = () => {
         }}
         footer={null}
         width={600}
-        destroyOnClose
+        destroyOnHidden
       >
         <MethodForm
           method={selectedMethod || undefined}

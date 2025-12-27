@@ -1,8 +1,9 @@
 import { useCallback, useState, useEffect } from "react";
-import { Tabs, Form, Input, Button, Switch, Select, Card, message } from "antd";
+import { Tabs, Form, Input, Button, Switch, Select, Card } from "antd";
 import type { EmailSettings } from "@/lib/types";
 import { SaveOutlined } from "@ant-design/icons";
 import api from "@/lib/api";
+import { message } from "@/lib/antdApp";
 
 const Settings = () => {
   const [form] = Form.useForm();
@@ -190,46 +191,6 @@ const Settings = () => {
             label="Free Shipping Threshold"
           >
             <Input type="number" prefix="$" />
-          </Form.Item>
-        </>
-      ),
-    },
-    {
-      key: "email",
-      label: "Email",
-      children: (
-        <>
-          <Form.Item
-            name="email_enabled"
-            label="Enable Email"
-            valuePropName="checked"
-          >
-            <Switch defaultChecked />
-          </Form.Item>
-          <Form.Item name="smtp_host" label="SMTP Host">
-            <Input placeholder="smtp.gmail.com" />
-          </Form.Item>
-          <Form.Item name="smtp_port" label="SMTP Port">
-            <Input type="number" placeholder="587" />
-          </Form.Item>
-          <Form.Item name="smtp_username" label="SMTP Username">
-            <Input placeholder="your-email@gmail.com" />
-          </Form.Item>
-          <Form.Item name="smtp_password" label="SMTP Password">
-            <Input.Password />
-          </Form.Item>
-          <Form.Item name="from_email" label="From Email">
-            <Input type="email" placeholder="noreply@yourstore.com" />
-          </Form.Item>
-          <Form.Item name="from_name" label="From Name">
-            <Input placeholder="Your Store" />
-          </Form.Item>
-          <Form.Item name="smtp_security" label="SMTP Security">
-            <Select placeholder="TLS">
-              <Select.Option value="tls">TLS</Select.Option>
-              <Select.Option value="ssl">SSL</Select.Option>
-              <Select.Option value="none">None</Select.Option>
-            </Select>
           </Form.Item>
         </>
       ),

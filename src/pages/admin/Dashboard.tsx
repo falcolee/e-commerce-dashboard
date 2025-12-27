@@ -333,7 +333,7 @@ const Dashboard = () => {
           <Col key={card.title} xs={24} md={8}>
             <Card
               styles={{ body: { padding: 16 } }}
-              bordered={false}
+              variant="borderless"
               className="shadow-sm"
               loading={card.loading}
             >
@@ -387,7 +387,7 @@ const Dashboard = () => {
 
       <Row gutter={[16, 16]}>
         <Col xs={24} lg={16}>
-          <Card bordered={false} className="shadow-sm">
+          <Card variant="borderless" className="shadow-sm">
             <Flex align="center" gap={10} style={{ marginBottom: 12 }}>
               <div
                 style={{
@@ -425,7 +425,7 @@ const Dashboard = () => {
           </Card>
         </Col>
         <Col xs={24} lg={8}>
-          <Card bordered={false} className="shadow-sm">
+          <Card variant="borderless" className="shadow-sm">
             <Flex align="center" gap={10} style={{ marginBottom: 12 }}>
               <div
                 style={{

@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { Table, Button, Space, Tag, Image, Input, Modal, Form, Select, message, InputNumber, Dropdown } from 'antd';
+import { Table, Button, Space, Tag, Image, Input, Modal, Form, Select, InputNumber, Dropdown } from 'antd';
 import {
   PlusOutlined,
   EditOutlined,
@@ -17,6 +17,7 @@ import type { FilterDropdownProps, SorterResult } from 'antd/es/table/interface'
 import api from '@/lib/api';
 import type { Product } from '@/lib/types';
 import ProductVariationsSection from '@/components/product-editor/ProductVariationsSection';
+import { message } from '@/lib/antdApp';
 
 const Products = () => {
   const navigate = useNavigate();
@@ -404,7 +405,7 @@ const Products = () => {
         }}
         footer={null}
         width={960}
-        destroyOnClose
+        destroyOnHidden
       >
         {variantProduct ? (
           <ProductVariationsSection

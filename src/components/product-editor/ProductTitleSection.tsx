@@ -1,4 +1,4 @@
-import { Card, Form, Input } from 'antd';
+import { Card, Form, Input, Space } from 'antd';
 
 const ProductTitleSection = () => {
   return (
@@ -14,14 +14,15 @@ const ProductTitleSection = () => {
         />
       </Form.Item>
       <Form.Item
-        name="slug"
         label="Permalink"
         tooltip="URL-friendly version of the product name"
       >
-        <Input
-          placeholder="product-slug"
-          addonBefore={`${window.location.origin}/product/`}
-        />
+        <Space.Compact block>
+          <Input readOnly value={`${window.location.origin}/product/`} />
+          <Form.Item name="slug" noStyle>
+            <Input placeholder="product-slug" />
+          </Form.Item>
+        </Space.Compact>
       </Form.Item>
     </Card>
   );

@@ -1,7 +1,7 @@
 import { useCallback, useMemo, useRef } from 'react';
 import ReactQuill from 'react-quill';
-import sanitizeHtml, { IOptions } from 'sanitize-html';
-import { message } from 'antd';
+import DOMPurify from 'dompurify';
+import { message } from '@/lib/antdApp';
 
 import { cn } from '@/lib/utils';
 import api from '@/lib/api';
@@ -17,8 +17,7 @@ export interface WysiwygEditorProps {
   className?: string;
 }
 
-const sanitizeConfig: IOptions = {
-  allowedTags: [
+const allowedTags = [
     'h1',
     'h2',
     'h3',
@@ -34,31 +33,36 @@ const sanitizeConfig: IOptions = {
     'ol',
     'li',
     'span',
-  ],
-  allowedAttributes: {
-    '*': ['style', 'class'],
-    a: ['href', 'target', 'rel'],
-    img: ['src', 'alt', 'width', 'height'],
-  },
-  allowedStyles: {
-    '*': {
-      color: [/^#[0-9a-f]{3,6}$/i, /^rgb\(/],
-      'text-align': [/^left$/, /^right$/, /^center$/],
-    },
-  },
-};
+  ];
 
-const stripHtml = (html: string): string =>
-  sanitizeHtml(html || '', { allowedTags: [], allowedAttributes: {} })
-    .replace(/&nbsp;/g, ' ')
-    .trim();
+const allowedAttributes = [
+  'style',
+  'class',
+  'href',
+  'target',
+  'rel',
+  'src',
+  'alt',
+  'width',
+  'height',
+];
+
+const stripHtml = (html: string): string => {
+  const container = document.createElement('div');
+  container.innerHTML = html || '';
+  return (container.textContent || '').replace(/\u00a0/g, ' ').trim();
+};
 
 const sanitizeValue = (value: string): string => {
   if (!value) {
     return '';
   }
 
-  const clean = sanitizeHtml(value, sanitizeConfig).trim();
+  const clean = DOMPurify.sanitize(value, {
+    ALLOWED_TAGS: allowedTags,
+    ALLOWED_ATTR: allowedAttributes,
+    KEEP_CONTENT: false,
+  }).trim();
   if (!clean) {
     return '';
   }

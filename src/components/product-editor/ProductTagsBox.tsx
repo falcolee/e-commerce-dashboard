@@ -1,10 +1,12 @@
 import { useEffect, useState } from 'react';
-import { Card, Form, Select, Button, message } from 'antd';
+import { Card, Form, Select, Button } from 'antd';
 import type { SelectProps } from 'antd';
 import { PlusOutlined, ReloadOutlined } from '@ant-design/icons';
 import { useNavigate } from 'react-router-dom';
 import api from '@/lib/api';
 import type { Tag } from '@/lib/types';
+import { sanitizeTags } from '@/utils/taxonomy/sanitizeTaxonomy';
+import { message } from '@/lib/antdApp';
 
 const ProductTagsBox = () => {
   const [options, setOptions] = useState<SelectProps['options']>([]);
@@ -15,7 +17,7 @@ const ProductTagsBox = () => {
     setLoading(true);
     try {
       const res = await api.taxonomies.tags.list({});
-      const tagOptions = (res.items ?? []).map((tag: Tag) => ({
+      const tagOptions = sanitizeTags(res?.items).map((tag: Tag) => ({
         label: tag.name,
         value: tag.term_id,
       }));

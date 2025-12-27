@@ -1,8 +1,9 @@
-import { Table, Tag, Button, Space, Dropdown, Tooltip, message } from 'antd';
+import { Table, Tag, Button, Space, Dropdown, Tooltip } from 'antd';
 import { EyeOutlined, EditOutlined, CopyOutlined, MoreOutlined } from '@ant-design/icons';
 import type { OrderShipment } from '@/lib/types';
 import type { MenuProps, TablePaginationConfig } from 'antd';
 import dayjs from 'dayjs';
+import { message } from '@/lib/antdApp';
 
 interface ShipmentListProps {
   shipments: OrderShipment[];

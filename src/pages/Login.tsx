@@ -1,8 +1,9 @@
-import { Form, Input, Button, Card, message } from 'antd';
+import { Form, Input, Button, Card } from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
 import { useState } from 'react';
+import { message } from '@/lib/antdApp';
 
 const Login = () => {
   const navigate = useNavigate();
@@ -50,13 +51,23 @@ const Login = () => {
             name="username"
             rules={[{ required: true, message: 'Please input your username!' }]}
           >
-            <Input prefix={<UserOutlined />} placeholder="Username" size="large" />
+            <Input
+              prefix={<UserOutlined />}
+              placeholder="Username"
+              size="large"
+              autoComplete="username"
+            />
           </Form.Item>
           <Form.Item
             name="password"
             rules={[{ required: true, message: 'Please input your password!' }]}
           >
-            <Input.Password prefix={<LockOutlined />} placeholder="Password" size="large" />
+            <Input.Password
+              prefix={<LockOutlined />}
+              placeholder="Password"
+              size="large"
+              autoComplete="current-password"
+            />
           </Form.Item>
           <Form.Item>
             <Button type="primary" htmlType="submit" size="large" block loading={loading}>
