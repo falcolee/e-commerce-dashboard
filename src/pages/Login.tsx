@@ -18,7 +18,6 @@ const Login = () => {
       message.success('Login successful!');
       navigate('/admin');
     } catch (error: unknown) {
-      console.error(error);
       const apiError = (error as { response?: { data?: { message?: string } } })?.response?.data?.message;
       message.error(apiError || 'Login failed');
     } finally {

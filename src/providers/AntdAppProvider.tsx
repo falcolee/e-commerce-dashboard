@@ -9,10 +9,11 @@ interface Props {
 const AntdAppBridge = ({ children }: Props) => {
   const { message } = AntdApp.useApp();
 
-  useEffect(() => {
-    setAntdMessageApi(message);
-    return () => setAntdMessageApi(null);
-  }, [message]);
+  // Ensure `@/lib/antdApp` always uses the contextual message API (avoids antd warning
+  // about static message functions not consuming theme/context).
+  setAntdMessageApi(message);
+
+  useEffect(() => () => setAntdMessageApi(null), []);
 
   return children;
 };
@@ -22,4 +23,3 @@ export const AntdAppProvider = ({ children }: Props) => (
     <AntdAppBridge>{children}</AntdAppBridge>
   </AntdApp>
 );
-

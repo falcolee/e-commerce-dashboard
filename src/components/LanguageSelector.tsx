@@ -86,10 +86,8 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ chil
       if (selectedLanguage?.dayjsLocale) {
         dayjs.locale(selectedLanguage.dayjsLocale);
       }
-
-      console.log('Language changed to:', languageCode);
-    } catch (error) {
-      console.error('Error changing language:', error);
+    } catch {
+      // no-op
     }
   };
 

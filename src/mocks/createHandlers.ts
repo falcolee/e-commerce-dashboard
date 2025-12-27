@@ -150,6 +150,96 @@ function createResolver(
       return HttpResponse.json({ success: true }, { status: 200 });
     }
 
+    if (args.clientPath === "/dashboard/revenue" && method === "GET") {
+      const url = new URL(request.url);
+      const period = url.searchParams.get("period") ?? "daily";
+      const isDaily = period === "daily";
+      const points = isDaily ? 7 : 4;
+      const stepMs = isDaily ? 86400000 : 7 * 86400000;
+      const start = Date.now() - (points - 1) * stepMs;
+
+      const items = Array.from({ length: points }, (_, i) => {
+        const date = new Date(start + i * stepMs).toISOString().slice(0, 10);
+        const orders = args.rng.int(120, 980);
+        const averageOrderValue = args.rng.float(35, 240);
+        const revenue = Number((orders * averageOrderValue).toFixed(2));
+        return {
+          date,
+          period: date,
+          orders,
+          revenue,
+        };
+      });
+
+      return HttpResponse.json(items, { status: 200 });
+    }
+
+    if (args.clientPath === "/dashboard/sales" && method === "GET") {
+      const url = new URL(request.url);
+      const period = url.searchParams.get("period") ?? "daily";
+      const isDaily = period === "daily";
+      const points = isDaily ? 7 : 4;
+      const stepMs = isDaily ? 86400000 : 7 * 86400000;
+      const start = Date.now() - (points - 1) * stepMs;
+
+      const items = Array.from({ length: points }, (_, i) => {
+        const date = new Date(start + i * stepMs).toISOString().slice(0, 10);
+        const total_orders = args.rng.int(80, 980);
+        const average_order_value = Number(args.rng.float(24, 220).toFixed(2));
+        const total_revenue = Number((total_orders * average_order_value).toFixed(2));
+        const conversion_rate = Number(args.rng.float(0.8, 4.8).toFixed(2));
+        return {
+          period: date,
+          total_orders,
+          total_revenue,
+          average_order_value,
+          conversion_rate,
+        };
+      });
+
+      return HttpResponse.json(items, { status: 200 });
+    }
+
+    if (args.clientPath === "/dashboard/top-products" && method === "GET") {
+      const url = new URL(request.url);
+      const limit = Math.max(1, Math.min(12, Number(url.searchParams.get("limit") ?? "4") || 4));
+      const baseUrl = import.meta.env.BASE_URL ?? "/";
+      const imageUrls = [
+        `${baseUrl}mock/products/sneakers.jpg`,
+        `${baseUrl}mock/products/headphones.jpg`,
+        `${baseUrl}mock/products/watch.jpg`,
+        `${baseUrl}mock/products/backpack.jpg`,
+      ];
+
+      const presets = [
+        { name: "Nike Sneakers", sku: "SNK-001" },
+        { name: "Beats Headphones", sku: "HDP-002" },
+        { name: "Wood Watch", sku: "WCH-003" },
+        { name: "Yellow Backpack", sku: "BAG-004" },
+        { name: "Minimal Desk Lamp", sku: "LMP-005" },
+        { name: "Ceramic Mug", sku: "MUG-006" },
+        { name: "Wireless Mouse", sku: "MSE-007" },
+        { name: "Scented Candle", sku: "CND-008" },
+      ];
+
+      const items = Array.from({ length: limit }, (_, i) => {
+        const preset = presets[i % presets.length];
+        const total_sold = args.rng.int(18, 240);
+        const price = Number(args.rng.float(18, 220).toFixed(2));
+        const total_revenue = Number((total_sold * price).toFixed(2));
+        return {
+          product_id: i + 1,
+          product_name: preset.name,
+          sku: preset.sku,
+          image_url: imageUrls[i % imageUrls.length],
+          total_sold,
+          total_revenue,
+        };
+      });
+
+      return HttpResponse.json(items, { status: 200 });
+    }
+
     if (
       isPaginatedResponse(args, schemaInfo.schema) &&
       method === "GET" &&

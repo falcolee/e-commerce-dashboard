@@ -147,6 +147,7 @@ const Dashboard = () => {
     id: p.product_id,
     name: p.product_name,
     sku: p.sku,
+    imageUrl: p.image_url ?? p.imageUrl,
     totalRevenue: p.total_revenue,
     totalSold: p.total_sold,
     rank: index + 1,
@@ -448,7 +449,12 @@ const Dashboard = () => {
               <Space direction="vertical" size={14} style={{ width: "100%" }}>
                 {trendingProducts.map((product) => (
                   <Flex key={product.id} align="center" gap={12}>
-                    <Avatar shape="square" size={56}>
+                    <Avatar
+                      shape="square"
+                      size={56}
+                      src={product.imageUrl}
+                      style={{ backgroundColor: token.colorFillSecondary }}
+                    >
                       {product.name?.charAt(0)?.toUpperCase()}
                     </Avatar>
                     <div style={{ flex: 1 }}>

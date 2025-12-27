@@ -38,7 +38,6 @@ const Orders = () => {
   }, []);
 
   const filteredOrders = orders.filter((order) => {
-    console.log(order);
     const matchesSearch = order.order_key.toLowerCase().includes(searchText.toLowerCase());
     const matchesStatus = statusFilter === 'all' || order.order_status === statusFilter;
     return matchesSearch && matchesStatus;

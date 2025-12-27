@@ -2,7 +2,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { BrowserRouter, HashRouter, Routes, Route, Navigate } from "react-router-dom";
 import { AuthProvider, useAuth } from "@/contexts/AuthContext";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
@@ -12,6 +12,7 @@ import Dashboard from "./pages/admin/Dashboard";
 import Products from "./pages/admin/Products";
 import ProductEditor from "./pages/admin/ProductEditor";
 import Orders from "./pages/admin/Orders";
+import OrderStats from "./pages/admin/OrderStats";
 import Customers from "./pages/admin/Customers";
 import MediaPage from "./pages/admin/Media";
 import Posts from "./pages/admin/Posts";
@@ -29,6 +30,7 @@ import Comments from "./pages/admin/Comments";
 import Coupons from "./pages/admin/Coupons";
 
 const queryClient = new QueryClient();
+const useHashRouter = import.meta.env.VITE_ROUTER_MODE === "hash";
 
 const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
   const { admin, loading } = useAuth();
@@ -55,45 +57,87 @@ const App = () => (
       <TooltipProvider>
         <Toaster />
         <Sonner />
-        <BrowserRouter
-          future={{ v7_startTransition: true, v7_relativeSplatPath: true }}
-        >
-        <Routes>
-          <Route path="/" element={<Index />} />
-          <Route path="/login" element={<Login />} />
-          <Route
-            path="/admin"
-            element={
-              <ProtectedRoute>
-                <AdminLayout />
-              </ProtectedRoute>
-            }
+        {useHashRouter ? (
+          <HashRouter>
+            <Routes>
+              <Route path="/" element={<Index />} />
+              <Route path="/login" element={<Login />} />
+              <Route
+                path="/admin"
+                element={
+                  <ProtectedRoute>
+                    <AdminLayout />
+                  </ProtectedRoute>
+                }
+              >
+                <Route index element={<Dashboard />} />
+                <Route path="products" element={<Products />} />
+                <Route path="products/new" element={<ProductEditor />} />
+                <Route path="products/:id/edit" element={<ProductEditor />} />
+                <Route path="categories" element={<Categories />} />
+                <Route path="tags" element={<Tags />} />
+                <Route path="orders" element={<Orders />} />
+                <Route path="orders/stats" element={<OrderStats />} />
+                <Route path="shipments" element={<Shipments />} />
+                <Route path="customers" element={<Customers />} />
+                <Route path="media" element={<MediaPage />} />
+                <Route path="posts" element={<Posts />} />
+                <Route path="pages" element={<Pages />} />
+                <Route path="roles" element={<Roles />} />
+                <Route path="permissions" element={<Permissions />} />
+                <Route path="attributes" element={<Attributes />} />
+                <Route path="payment-gateways" element={<PaymentGateways />} />
+                <Route path="shipping-methods" element={<ShippingMethods />} />
+                <Route path="comments" element={<Comments />} />
+                <Route path="coupons" element={<Coupons />} />
+                <Route path="settings" element={<Settings />} />
+              </Route>
+              {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </HashRouter>
+        ) : (
+          <BrowserRouter
+            future={{ v7_startTransition: true, v7_relativeSplatPath: true }}
           >
-            <Route index element={<Dashboard />} />
-            <Route path="products" element={<Products />} />
-            <Route path="products/new" element={<ProductEditor />} />
-            <Route path="products/:id/edit" element={<ProductEditor />} />
-            <Route path="categories" element={<Categories />} />
-            <Route path="tags" element={<Tags />} />
-            <Route path="orders" element={<Orders />} />
-            <Route path="shipments" element={<Shipments />} />
-            <Route path="customers" element={<Customers />} />
-            <Route path="media" element={<MediaPage />} />
-            <Route path="posts" element={<Posts />} />
-            <Route path="pages" element={<Pages />} />
-            <Route path="roles" element={<Roles />} />
-            <Route path="permissions" element={<Permissions />} />
-            <Route path="attributes" element={<Attributes />} />
-            <Route path="payment-gateways" element={<PaymentGateways />} />
-            <Route path="shipping-methods" element={<ShippingMethods />} />
-            <Route path="comments" element={<Comments />} />
-            <Route path="coupons" element={<Coupons />} />
-            <Route path="settings" element={<Settings />} />
-          </Route>
-          {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </BrowserRouter>
+            <Routes>
+              <Route path="/" element={<Index />} />
+              <Route path="/login" element={<Login />} />
+              <Route
+                path="/admin"
+                element={
+                  <ProtectedRoute>
+                    <AdminLayout />
+                  </ProtectedRoute>
+                }
+              >
+                <Route index element={<Dashboard />} />
+                <Route path="products" element={<Products />} />
+                <Route path="products/new" element={<ProductEditor />} />
+                <Route path="products/:id/edit" element={<ProductEditor />} />
+                <Route path="categories" element={<Categories />} />
+                <Route path="tags" element={<Tags />} />
+                <Route path="orders" element={<Orders />} />
+                <Route path="orders/stats" element={<OrderStats />} />
+                <Route path="shipments" element={<Shipments />} />
+                <Route path="customers" element={<Customers />} />
+                <Route path="media" element={<MediaPage />} />
+                <Route path="posts" element={<Posts />} />
+                <Route path="pages" element={<Pages />} />
+                <Route path="roles" element={<Roles />} />
+                <Route path="permissions" element={<Permissions />} />
+                <Route path="attributes" element={<Attributes />} />
+                <Route path="payment-gateways" element={<PaymentGateways />} />
+                <Route path="shipping-methods" element={<ShippingMethods />} />
+                <Route path="comments" element={<Comments />} />
+                <Route path="coupons" element={<Coupons />} />
+                <Route path="settings" element={<Settings />} />
+              </Route>
+              {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </BrowserRouter>
+        )}
     </TooltipProvider>
     </AuthProvider>
   </QueryClientProvider>

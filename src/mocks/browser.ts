@@ -26,6 +26,6 @@ export async function startMockWorker() {
     onUnhandledRequest: "bypass",
     serviceWorker: { url: `${import.meta.env.BASE_URL}mockServiceWorker.js` },
     // Ensure the worker is ready before continuing
-    quiet: false,
+    quiet: true,
   });
 }

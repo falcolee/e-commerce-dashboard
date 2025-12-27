@@ -1,6 +1,7 @@
 export interface Rng {
   next(): number;
   int(min: number, max: number): number;
+  float(min: number, max: number): number;
 }
 
 export function createRng(seed: number): Rng {
@@ -20,6 +21,11 @@ export function createRng(seed: number): Rng {
     return Math.floor(n * (max - min + 1)) + min;
   };
 
-  return { next, int };
-}
+  const float = (min: number, max: number) => {
+    if (max < min) return min;
+    const n = next();
+    return n * (max - min) + min;
+  };
 
+  return { next, int, float };
+}

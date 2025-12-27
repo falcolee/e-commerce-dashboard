@@ -24,7 +24,6 @@ function parseNumber(value: string | undefined): number | undefined {
 
 export function shouldEnableMocks(): boolean {
   const buildFlag = parseBoolean(import.meta.env.VITE_USE_MOCKS);
-  console.log("Build flag:", buildFlag);
   if (buildFlag !== undefined) return buildFlag;
 
   if (typeof window === "undefined") return false;
