@@ -8,7 +8,8 @@ export async function startMockWorker() {
   if (!config.enabled) return;
 
   const apiBaseUrl =
-    import.meta.env.VITE_API_BASE_URL ?? "http://localhost:3000/api/v1/admin";
+    import.meta.env.VITE_API_BASE_URL ??
+    `${import.meta.env.BASE_URL}api/v1/admin`;
   const handlers = createHandlers({
     spec: mockSpec,
     apiBaseUrl,
@@ -23,7 +24,7 @@ export async function startMockWorker() {
 
   await worker.start({
     onUnhandledRequest: "bypass",
-    serviceWorker: { url: "/mockServiceWorker.js" },
+    serviceWorker: { url: `${import.meta.env.BASE_URL}mockServiceWorker.js` },
     // Ensure the worker is ready before continuing
     quiet: false,
   });

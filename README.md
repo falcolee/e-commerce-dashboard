@@ -182,6 +182,26 @@ e-commerce-dashboard/
 2. `?mock=1`
 3. `localStorage.USE_MOCKS === "1"`
 
+## Deploy Mock (Static)
+
+This repo can be deployed as a fully-static “mock” dashboard (no backend) using MSW.
+
+### GitHub Pages (automatic)
+
+1. In GitHub, open **Settings → Pages** and set **Build and deployment** to **GitHub Actions**.
+2. Push to `main` (or run the workflow manually).
+
+Workflow: `.github/workflows/pages-mock.yml`.
+
+### Vercel (automatic)
+
+1. Import the repo in Vercel (Framework preset: Vite).
+2. Set environment variables:
+   - `VITE_USE_MOCKS=true`
+   - (optional) `VITE_API_BASE_URL=/api/v1/admin`
+3. Build command: `pnpm build` (or `npm run build`)
+4. Output directory: `dist`
+
 ## API Documentation
 
 - OpenAPI YAML: `docs/swagger.yaml`
