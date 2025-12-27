@@ -13,24 +13,8 @@
 
 ## Preview
 
-- URL: `https://e-commerce-dashboard-three-beige.vercel.app`
+- URL: [https://e-commerce-dashboard-three-beige.vercel.app](https://e-commerce-dashboard-three-beige.vercel.app)
 - Demo credentials: `admin` / `admin`
-
-## Contents
-
-- [Introduction](#introduction)
-- [Highlights](#highlights)
-- [Features (Pages)](#features-pages)
-- [Preview](#preview)
-- [Tech Stack](#tech-stack)
-- [Getting Started](#getting-started)
-- [Configuration](#configuration)
-- [Mock API (MSW)](#mock-api-msw)
-- [Project Structure](#project-structure)
-- [Development Notes](#development-notes)
-- [API Documentation](#api-documentation)
-- [Contributing](#contributing)
-- [License](#license)
 
 ## Introduction
 
@@ -44,6 +28,45 @@
 - React Query for server state (caching, refetching, mutations)
 - MSW-based mock API (toggle via build flag, URL param, or localStorage)
 - OpenAPI docs included (`docs/swagger.yaml`, `docs/swagger.json`)
+
+### Screenshots
+
+Here are some screenshots in action:
+
+<table>
+  <tr>
+    <td align="center">
+      <a href="./public/screenshots/dashboard.png">
+        <img src="./public/screenshots/dashboard.png" alt="System Dashboard" width="250"/>
+      </a>
+      <br/>
+      System Dashboard
+    </td>
+    <td align="center">
+      <a href="./public/screenshots/products.png">
+        <img src="./public/screenshots/products.png" alt="Products" width="250"/>
+      </a>
+      <br/>
+      Products
+    </td>
+  </tr>
+  <tr>
+    <td align="center">
+      <a href="./public/screenshots/product-editor.png">
+        <img src="./public/screenshots/product-editor.png" alt="Product Editor" width="250"/>
+      </a>
+      <br/>
+      Product Editor
+    </td>
+    <td align="center">
+      <a href="./public/screenshots/permissions.png">
+        <img src="./public/screenshots/permissions.png" alt="Permissions" width="250"/>
+      </a>
+      <br/>
+        Permissions
+    </td>
+  </tr>
+</table>
 
 ## Features (Pages)
 
@@ -199,16 +222,6 @@ This repo can be deployed as a fully-static “mock” dashboard (no backend) us
    - `VITE_USE_MOCKS=true`
    - `VITE_BASE_PATH=/`
  3. Deploy.
-
-## Screenshots
-
-![Dashboard](./public/screenshots/dashboard.png)
-![Products](./public/screenshots/products.png)
-![Product Editor](./public/screenshots/product-editor.png)
-![Permissions](./public/screenshots/permissions.png)
-   - (optional) `VITE_API_BASE_URL=/api/v1/admin`
-3. Build command: `pnpm build` (or `npm run build`)
-4. Output directory: `dist`
 
 ## API Documentation
 
