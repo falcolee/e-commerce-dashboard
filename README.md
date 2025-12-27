@@ -11,11 +11,17 @@
 [![vite](https://img.shields.io/badge/vite-5.4-646cff.svg)](https://vitejs.dev/)
 [![vite](https://img.shields.io/badge/antd-5.28.0-1677FF.svg)](https://ant.design/)
 
+## Preview
+
+- URL: `https://e-commerce-dashboard-three-beige.vercel.app`
+- Demo credentials: `admin` / `admin`
+
 ## Contents
 
 - [Introduction](#introduction)
 - [Highlights](#highlights)
 - [Features (Pages)](#features-pages)
+- [Preview](#preview)
 - [Tech Stack](#tech-stack)
 - [Getting Started](#getting-started)
 - [Configuration](#configuration)
@@ -186,18 +192,20 @@ e-commerce-dashboard/
 
 This repo can be deployed as a fully-static “mock” dashboard (no backend) using MSW.
 
-### GitHub Pages (automatic)
-
-1. In GitHub, open **Settings → Pages** and set **Build and deployment** to **GitHub Actions**.
-2. Push to `main` (or run the workflow manually).
-
-Workflow: `.github/workflows/pages-mock.yml`.
-
 ### Vercel (automatic)
 
 1. Import the repo in Vercel (Framework preset: Vite).
 2. Set environment variables:
    - `VITE_USE_MOCKS=true`
+   - `VITE_BASE_PATH=/`
+ 3. Deploy.
+
+## Screenshots
+
+![Dashboard](./public/screenshots/dashboard.png)
+![Products](./public/screenshots/products.png)
+![Product Editor](./public/screenshots/product-editor.png)
+![Permissions](./public/screenshots/permissions.png)
    - (optional) `VITE_API_BASE_URL=/api/v1/admin`
 3. Build command: `pnpm build` (or `npm run build`)
 4. Output directory: `dist`
